@@ -1,3 +1,4 @@
+import { random } from "lodash";
 import React from "react";
 
 import "./Bread.sass";
@@ -12,7 +13,7 @@ const Bread = ({ sauceTop, sauceBottom }: Props) => {
     <div className="Bread">
       {sauceBottom === "peanut" && <div className="peanut behind" />}
       {sauceBottom === "jam" && <div className="jam behind" />}
-      <div className="slice" />
+      <div className="slice" style={{ rotate: `${random(-2, 2)}deg` }} />
       {sauceTop === "peanut" && <div className="peanut" />}
       {sauceTop === "jam" && <div className="jam" />}
     </div>

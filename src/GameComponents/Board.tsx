@@ -15,9 +15,9 @@ interface BoardState {
 }
 const peanut = <Bread sauceTop="peanut" />;
 const jam = <Bread sauceTop="jam" />;
-const blank = <Bread sauceBottom="jam" />;
+const double = <Bread sauceTop="peanut" sauceBottom="jam" />;
 
-const initialState = { "10": [peanut, blank], "01": [jam] };
+const initialState = { "10": [peanut, double], "01": [jam] };
 
 const Board = ({ width, height }: Props) => {
   const [boardState, setBoardState] = useState(initialState as BoardState);
