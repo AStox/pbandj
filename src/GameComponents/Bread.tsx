@@ -3,14 +3,18 @@ import React from "react";
 import "./Bread.sass";
 
 interface Props {
-  sauce?: "peanut" | "jam" | undefined;
+  sauceTop?: "peanut" | "jam" | undefined;
+  sauceBottom?: "peanut" | "jam" | undefined;
 }
 
-const Bread = ({ sauce }: Props) => {
+const Bread = ({ sauceTop, sauceBottom }: Props) => {
   return (
     <div className="Bread">
-      {sauce === "peanut" && <div className="peanut" />}
-      {sauce === "jam" && <div className="jam" />}
+      {sauceBottom === "peanut" && <div className="peanut behind" />}
+      {sauceBottom === "jam" && <div className="jam behind" />}
+      <div className="slice" />
+      {sauceTop === "peanut" && <div className="peanut" />}
+      {sauceTop === "jam" && <div className="jam" />}
     </div>
   );
 };

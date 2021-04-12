@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { map, range } from "lodash";
 
 import "./Board.sass";
@@ -11,13 +11,13 @@ interface Props {
 }
 
 interface BoardState {
-  [id: number]: "peanut" | "jam";
+  [id: string]: ReactElement[];
 }
-const bread = (i: number, j: number, boardState: BoardState) => (
-  <Bread sauce={boardState[parseInt(`${i}${j}`)]} />
-);
+const peanut = <Bread sauceTop="peanut" />;
+const jam = <Bread sauceTop="jam" />;
+const blank = <Bread sauceBottom="jam" />;
 
-const initialState = { 11: "peanut" };
+const initialState = { "10": [peanut, blank], "01": [jam] };
 
 const Board = ({ width, height }: Props) => {
   const [boardState, setBoardState] = useState(initialState as BoardState);
@@ -28,7 +28,7 @@ const Board = ({ width, height }: Props) => {
         {map(range(height), (i: number) => (
           <div key={`hor-${i}`} className="flex-hor">
             {map(range(width), (j: number) => (
-              <Place key={`${i}${j}`} bread={bread(i, j, boardState)} />
+              <Place key={`${j}${i}`} bread={boardState[`${j}${i}`]} />
             ))}
           </div>
         ))}
