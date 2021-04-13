@@ -1,39 +1,81 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import { map, range } from "lodash";
 
 import "./Board.sass";
 import Place from "./Place";
 import Bread from "./Bread";
+import { useMemo } from "react";
+import { useCallback } from "react";
 
 interface Props {
   width: number;
   height: number;
 }
 
-interface BoardState {
+export interface BoardState {
   [id: string]: ReactElement[];
 }
 const peanut = <Bread sauceTop="peanut" />;
 const jam = <Bread sauceTop="jam" />;
 const double = <Bread sauceTop="peanut" sauceBottom="jam" />;
 
-const initialState = { "10": [peanut, double], "01": [jam] };
+const initialState = { "10": [peanut, double, jam, double], "01": [jam] };
 
 const Board = ({ width, height }: Props) => {
+  const [selected, setSelected] = useState(null as ReactElement | null);
+  const select = (element: ReactElement) => {
+    return new Promise<ReactElement>((resolve, reject) => {
+      if (selected) {
+        reject();
+      }
+      setSelected(element);
+      resolve(element);
+    });
+  };
+
+  const [curPos, setCurPos] = useState([0, 0]);
+
+  useEffect(() => {
+    addEventListener("mousemove", followCursor);
+    return () => removeEventListener("mousemove", followCursor);
+  }, []);
+
+  const followCursor = (e: MouseEvent) => {
+    setCurPos([e.pageX, e.pageY]);
+  };
+
   const [boardState, setBoardState] = useState(initialState as BoardState);
 
+  const updateBoard = (id: string, changes: ReactElement[]) => {
+    setBoardState({ ...boardState, [id]: changes });
+  };
+
   return (
-    <div className="Board">
-      <div className="flex-vert">
-        {map(range(height), (i: number) => (
-          <div key={`hor-${i}`} className="flex-hor">
-            {map(range(width), (j: number) => (
-              <Place key={`${j}${i}`} bread={boardState[`${j}${i}`]} />
-            ))}
-          </div>
-        ))}
+    <>
+      <div className="Board">
+        <div style={{ position: "absolute", top: curPos[1], left: curPos[0] }}>
+          {selected}
+        </div>
+        <div className="flex-vert">
+          {map(range(height), (i: number) => (
+            <div key={`hor-${i}`} className="flex-hor">
+              {map(range(width), (j: number) => (
+                <Place
+                  id={`${j}${i}`}
+                  key={`${j}${i}`}
+                  selected={selected}
+                  setSelected={select}
+                  updateBoard={updateBoard}
+                  bread={boardState[`${j}${i}`]}
+                  boardState={boardState}
+                  setBoardState={setBoardState}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
