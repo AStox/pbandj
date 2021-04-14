@@ -34,7 +34,6 @@ const Place = ({
 
   const addSlice = () => {
     if (selected) {
-      console.log(bread);
       updateBoard(id, [...(bread || []), selected]);
       setSelected(null);
     }
@@ -44,7 +43,7 @@ const Place = ({
     <div className="Place" onClick={addSlice}>
       <div className="bread-container">
         {map(bread, (item, i) => (
-          <div className="slice-container" style={{ top: `-${i * 3}rem` }}>
+          <div className="slice-container" style={{ top: `-${i * 2}rem` }}>
             {React.cloneElement(item, {
               selected,
               setSelected: partial(select, i),

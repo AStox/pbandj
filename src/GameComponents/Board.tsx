@@ -23,10 +23,11 @@ const initialState = { "10": [peanut, double, jam, double], "01": [jam] };
 
 const Board = ({ width, height }: Props) => {
   const [selected, setSelected] = useState(null as ReactElement | null);
+
   const select = (element: ReactElement) => {
     return new Promise<ReactElement>((resolve, reject) => {
       if (selected) {
-        reject();
+        reject(element);
       }
       setSelected(element);
       resolve(element);
@@ -37,14 +38,32 @@ const Board = ({ width, height }: Props) => {
 
   useEffect(() => {
     addEventListener("mousemove", followCursor);
-    return () => removeEventListener("mousemove", followCursor);
+    addEventListener("keydown", handleKeydown);
+    return () => {
+      removeEventListener("mousemove", followCursor);
+      removeEventListener("keydown", handleKeydown);
+    };
   }, []);
+
+  const handleKeydown = (e: KeyboardEvent) => {
+    if (e.key == " ") {
+      console.log(selected);
+      setSelected(flipSlice(selected));
+    }
+  };
 
   const followCursor = (e: MouseEvent) => {
     setCurPos([e.pageX, e.pageY]);
   };
 
   const [boardState, setBoardState] = useState(initialState as BoardState);
+
+  const flipSlice = (slice: ReactElement<typeof Bread> | null) => {
+    console.log(slice.props.sauceTop);
+    const top = slice?.props.sauceTop;
+    const bottom = slice?.props.sauceBottom;
+    return <Bread sauceTop={bottom} sauceTop={top} />;
+  };
 
   const updateBoard = (id: string, changes: ReactElement[]) => {
     setBoardState({ ...boardState, [id]: changes });
@@ -53,7 +72,10 @@ const Board = ({ width, height }: Props) => {
   return (
     <>
       <div className="Board">
-        <div style={{ position: "absolute", top: curPos[1], left: curPos[0] }}>
+        <div
+          className="selection"
+          style={{ top: curPos[1] + 1, left: curPos[0] + 1 }}
+        >
           {selected}
         </div>
         <div className="flex-vert">

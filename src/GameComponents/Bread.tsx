@@ -1,5 +1,5 @@
 import { random } from "lodash";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 
 import "./Bread.sass";
 
@@ -14,6 +14,8 @@ interface Props {
 const Bread = (props: Props) => {
   const { sauceTop, sauceBottom, selected, setSelected, addSlice } = props;
 
+  const [rotation, _] = useState(random(-2, 2));
+
   //   const addSlice = () => {
   //     if (selected) {
   //       updateBoard(id, [selected]);
@@ -22,6 +24,7 @@ const Bread = (props: Props) => {
   //   };
 
   const handleClick = () => {
+    console.log("BREAD");
     if (selected) {
       addSlice();
     } else {
@@ -31,11 +34,34 @@ const Bread = (props: Props) => {
 
   return (
     <div className="Bread" onClick={handleClick}>
-      {sauceBottom === "peanut" && <div className="peanut behind" />}
-      {sauceBottom === "jam" && <div className="jam behind" />}
-      <div className="slice" style={{ rotate: `${random(-2, 2)}deg` }} />
-      {sauceTop === "peanut" && <div className="peanut" />}
-      {sauceTop === "jam" && <div className="jam" />}
+      <div
+        className="absolute-container behind"
+        style={{ rotate: "5deg", width: "110%", left: "-1.5rem" }}
+      >
+        {sauceBottom === "peanut" && <div className="peanut" />}
+        {sauceBottom === "jam" && <div className="jam" />}
+      </div>
+      <div
+        className="absolute-container behind"
+        style={{ rotate: "-5deg", width: "110%" }}
+      >
+        {sauceBottom === "peanut" && <div className="peanut" />}
+        {sauceBottom === "jam" && <div className="jam" />}
+      </div>
+      <div className="absolute-container">
+        <div className="slice" style={{ rotate: `${rotation}deg` }} />
+      </div>
+      <div
+        className="absolute-container"
+        style={{ rotate: "5deg", top: "1rem" }}
+      >
+        {sauceTop === "peanut" && <div className="peanut" />}
+        {sauceTop === "jam" && <div className="jam" />}
+      </div>
+      <div className="absolute-container" style={{ rotate: "-18deg" }}>
+        {sauceTop === "peanut" && <div className="peanut" />}
+        {sauceTop === "jam" && <div className="jam" />}
+      </div>
     </div>
   );
 };

@@ -1,39 +1,36 @@
 .Bread
-    display: flex
     flex:1
     position: relative
     max-width: 20rem
-    min-width: 10rem
+    max-height: 11rem
 
-    .slice
-        background-color: #f8ddb4
-        border: solid 1rem #e7a650
-        border-radius: 5rem 5rem 0.4rem 0.4rem
+
+    .absolute-container
         position: absolute
-        width: calc(100% - 2rem)
-        height: calc(100% - 2rem)
+        width: 100%
+        height: 100%
+        display: flex
 
-    .peanut
-        background-color: #a7762d
-        margin: 1.5rem
-        border-radius: 5rem 5rem 2rem 2rem
-        position: absolute
-        rotate: -2deg
-        width: 85%
-        height: 85%
+        .slice
+            background-color: #f8ddb4
+            border: solid 1rem #e7a650
+            border-radius: 5rem 5rem 0.4rem 0.4rem
+            width: 100%
+            box-shadow: 6px 6px 1px rgba(130, 130, 130, 0.33)
+            
+        .peanut
+            background-color: #a7762d
+            margin: 1.25rem
+            border-radius: 5rem 5rem 2rem 2rem
+            rotate: -2deg
+            width: 100%
 
-    .jam
-        background-color: #e0303f
-        margin: 1.5rem
-        border-radius: 5rem 5rem 2rem 2rem
-        position: absolute
-        rotate: 2deg
-        width: 85%
-        height: 85%
+        .jam
+            background-color: #e0303f
+            margin: 1.25rem
+            border-radius: 5rem 5rem 2rem 2rem
+            rotate: 2deg
+            width: 100%
 
-    .behind
-        top: 1.5rem
-        rotate: 5deg
-        width: calc(100% - 2rem)
-        height: calc(100% - 2rem)
-        left: -1rem
+        &.behind
+            top: 2rem
