@@ -14,7 +14,9 @@ interface Props {
 const Bread = (props: Props) => {
   const { sauceTop, sauceBottom, selected, setSelected, addSlice } = props;
 
-  const [rotation, _] = useState(random(-2, 2));
+  const [sliceRotation] = useState(random(-5, 5));
+  const [topRotation] = useState(random(20, 160));
+  //   const [peanutRotation] = useState(random(-5, 5));
 
   const handleClick = () => {
     if (selected && addSlice) {
@@ -41,16 +43,19 @@ const Bread = (props: Props) => {
         {sauceBottom === "jam" && <div className="jam" />}
       </div>
       <div className="absolute-container">
-        <div className="slice" style={{ rotate: `${rotation}deg` }} />
+        <div className="slice" style={{ rotate: `${sliceRotation}deg` }} />
       </div>
       <div
         className="absolute-container"
-        style={{ rotate: "5deg", top: "1rem" }}
+        style={{ rotate: `-${topRotation}deg`, top: "1rem" }}
       >
         {sauceTop === "peanut" && <div className="peanut" />}
         {sauceTop === "jam" && <div className="jam" />}
       </div>
-      <div className="absolute-container" style={{ rotate: "-18deg" }}>
+      <div
+        className="absolute-container"
+        style={{ rotate: `${topRotation}deg` }}
+      >
         {sauceTop === "peanut" && <div className="peanut" />}
         {sauceTop === "jam" && <div className="jam" />}
       </div>

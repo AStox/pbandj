@@ -19,7 +19,7 @@ const peanut = <Bread sauceTop="peanut" />;
 const jam = <Bread sauceTop="jam" />;
 const double = <Bread sauceTop="peanut" sauceBottom="jam" />;
 
-const initialState = { "10": [peanut, double, jam, double], "01": [jam] };
+const initialState = { "10": [peanut], "01": [jam] };
 
 const Board = ({ width, height }: Props) => {
   const [selected, setSelected] = useState(null as ReactElement | null);
