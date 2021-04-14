@@ -43,11 +43,17 @@ const Board = ({ width, height }: Props) => {
       removeEventListener("mousemove", followCursor);
       removeEventListener("keydown", handleKeydown);
     };
+  }, [selected]);
+
+  useEffect(() => {
+    addEventListener("mousemove", followCursor);
+    return () => {
+      removeEventListener("mousemove", followCursor);
+    };
   }, []);
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key == " ") {
-      console.log(selected);
       setSelected(flipSlice(selected));
     }
   };
@@ -62,7 +68,7 @@ const Board = ({ width, height }: Props) => {
     console.log(slice.props.sauceTop);
     const top = slice?.props.sauceTop;
     const bottom = slice?.props.sauceBottom;
-    return <Bread sauceTop={bottom} sauceTop={top} />;
+    return <Bread sauceTop={bottom} sauceBottom={top} />;
   };
 
   const updateBoard = (id: string, changes: ReactElement[]) => {

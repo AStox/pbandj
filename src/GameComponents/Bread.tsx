@@ -7,8 +7,8 @@ interface Props {
   sauceTop?: "peanut" | "jam" | undefined;
   sauceBottom?: "peanut" | "jam" | undefined;
   selected?: ReactElement | null;
-  setSelected(element: ReactElement | null): void;
-  addSlice(): void;
+  setSelected?(element: ReactElement | null): void;
+  addSlice?(): void;
 }
 
 const Bread = (props: Props) => {
@@ -16,19 +16,11 @@ const Bread = (props: Props) => {
 
   const [rotation, _] = useState(random(-2, 2));
 
-  //   const addSlice = () => {
-  //     if (selected) {
-  //       updateBoard(id, [selected]);
-  //       setSelected(null);
-  //     }
-  //   };
-
   const handleClick = () => {
-    console.log("BREAD");
-    if (selected) {
+    if (selected && addSlice) {
       addSlice();
     } else {
-      setSelected(<Bread {...props} />);
+      if (setSelected) setSelected(<Bread {...props} />);
     }
   };
 
