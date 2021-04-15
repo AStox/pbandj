@@ -11,22 +11,22 @@
         height: 100%
         display: flex
 
+        .shadow
+            height: 1rem
+            width: 100%
+            position: absolute
+            top: calc(100% - 1rem)
+            background-color: rgba(0, 0, 0, 0.1)
+            border-radius: 0.2rem 0.2rem 0.5rem 0.5rem
+
         .slice
             background-color: #f8ddb4
             border: solid 1rem #e7a650
+            border-bottom: solid 1.5rem #e7a650
             border-radius: 5rem 5rem 0.4rem 0.4rem
             width: 100%
-            box-shadow: 6px 6px 1px rgba(130, 130, 130, 0.33)
+            box-shadow: 6px 6px 1px rgba(0, 0, 0, 0.1)
 
-            &:after
-                content: ""
-                height: 1rem
-                width: calc(100% + 2rem)
-                position: absolute
-                top: calc(100% + 0.5rem)
-                left: -1rem
-                background-color: #d79948
-                border-radius: 0.2rem 0.2rem 0.5rem 0.5rem
             
         .peanut
             background-color: #a76e2d

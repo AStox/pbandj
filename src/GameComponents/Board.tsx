@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { map, range } from "lodash";
+import { map, random, range } from "lodash";
 
 import "./Board.sass";
 import Place from "./Place";
@@ -15,11 +15,27 @@ interface Props {
 export interface BoardState {
   [id: string]: ReactElement[];
 }
-const peanut = <Bread sauceTop="peanut" />;
-const jam = <Bread sauceTop="jam" />;
-const double = <Bread sauceTop="peanut" sauceBottom="jam" />;
+const blank = <Bread rotTop={random(20, 160)} rotBottom={random(20, 160)} />;
+const peanut = (
+  <Bread
+    sauceTop="peanut"
+    rotTop={random(20, 160)}
+    rotBottom={random(20, 160)}
+  />
+);
+const jam = (
+  <Bread sauceTop="jam" rotTop={random(20, 160)} rotBottom={random(20, 160)} />
+);
+const double = (
+  <Bread
+    sauceTop="peanut"
+    sauceBottom="jam"
+    rotTop={random(20, 160)}
+    rotBottom={random(20, 160)}
+  />
+);
 
-const initialState = { "10": [peanut], "01": [jam] };
+const initialState = { "10": [blank], "01": [double] };
 
 const Board = ({ width, height }: Props) => {
   const [selected, setSelected] = useState(null as ReactElement | null);
@@ -65,14 +81,18 @@ const Board = ({ width, height }: Props) => {
   const [boardState, setBoardState] = useState(initialState as BoardState);
 
   const flipSlice = (slice: ReactElement<typeof Bread> | null) => {
-    console.log(slice.props.sauceTop);
-    const top = slice?.props.sauceTop;
-    const bottom = slice?.props.sauceBottom;
-    return <Bread sauceTop={bottom} sauceBottom={top} />;
+    return (
+      <Bread
+        sauceTop={slice?.props.sauceBottom}
+        sauceBottom={slice?.props.sauceTop}
+        rotTop={slice?.props.rotBottom}
+        rotBottom={slice?.props.rotTop}
+      />
+    );
   };
 
   const updateBoard = (id: string, changes: ReactElement[]) => {
-    setBoardState({ ...boardState, [id]: changes });
+    return setBoardState({ ...boardState, [id]: changes });
   };
 
   return (
@@ -94,7 +114,7 @@ const Board = ({ width, height }: Props) => {
                   selected={selected}
                   setSelected={select}
                   updateBoard={updateBoard}
-                  bread={boardState[`${j}${i}`]}
+                  slicesArray={boardState[`${j}${i}`]}
                   boardState={boardState}
                   setBoardState={setBoardState}
                 />

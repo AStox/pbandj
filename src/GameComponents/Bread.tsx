@@ -9,13 +9,22 @@ interface Props {
   selected?: ReactElement | null;
   setSelected?(element: ReactElement | null): void;
   addSlice?(): void;
+  rotTop?: number;
+  rotBottom?: number;
 }
 
 const Bread = (props: Props) => {
-  const { sauceTop, sauceBottom, selected, setSelected, addSlice } = props;
+  const {
+    sauceTop,
+    sauceBottom,
+    selected,
+    setSelected,
+    addSlice,
+    rotTop,
+  } = props;
 
-  const [sliceRotation] = useState(random(-5, 5));
-  const [topRotation] = useState(random(20, 160));
+  const [rotSlice] = useState(random(-5, 5));
+  //   const [rotTop] = useState(random(20, 160));
   //   const [peanutRotation] = useState(random(-5, 5));
 
   const handleClick = () => {
@@ -43,21 +52,21 @@ const Bread = (props: Props) => {
         {sauceBottom === "jam" && <div className="jam" />}
       </div>
       <div className="absolute-container">
-        <div className="slice" style={{ rotate: `${sliceRotation}deg` }} />
+        <div className="slice" style={{ rotate: `${rotSlice}deg` }} />
       </div>
       <div
         className="absolute-container"
-        style={{ rotate: `-${topRotation}deg`, top: "1rem" }}
+        style={{ rotate: `-${rotTop}deg`, top: "1rem" }}
       >
         {sauceTop === "peanut" && <div className="peanut" />}
         {sauceTop === "jam" && <div className="jam" />}
       </div>
-      <div
-        className="absolute-container"
-        style={{ rotate: `${topRotation}deg` }}
-      >
+      <div className="absolute-container" style={{ rotate: `${rotTop}deg` }}>
         {sauceTop === "peanut" && <div className="peanut" />}
         {sauceTop === "jam" && <div className="jam" />}
+      </div>
+      <div className="absolute-container" style={{ rotate: `${rotSlice}deg` }}>
+        <div className="shadow"></div>
       </div>
     </div>
   );
