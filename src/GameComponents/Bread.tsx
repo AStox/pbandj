@@ -7,7 +7,7 @@ interface Props {
   sauceTop?: "peanut" | "jam" | undefined;
   sauceBottom?: "peanut" | "jam" | undefined;
   selected?: ReactElement | null;
-  setSelected?(element: ReactElement | null): void;
+  setSelected?(element: ReactElement | null): Promise<ReactElement>;
   addSlice?(): void;
   rotTop?: number;
   rotBottom?: number;
@@ -31,7 +31,9 @@ const Bread = (props: Props) => {
     if (selected && addSlice) {
       addSlice();
     } else {
-      if (setSelected) setSelected(<Bread {...props} />);
+      if (setSelected) {
+        setSelected(<Bread {...props} />).catch(() => {});
+      }
     }
   };
 

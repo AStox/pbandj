@@ -27,7 +27,7 @@ const Place = ({
   setBoardState,
 }: Props) => {
   const select = (index: number, element: ReactElement) => {
-    setSelected(element).then(() => {
+    return setSelected(element).then(() => {
       const arr = boardState[id];
       arr.splice(index);
       setBoardState({ ...boardState, [id]: arr });
@@ -37,7 +37,7 @@ const Place = ({
   const addSlice = () => {
     if (selected) {
       updateBoard(id, [...(slicesArray || []), selected]);
-      setSelected(null);
+      setSelected(null).catch(() => {});
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { map, random, range } from "lodash";
+import { forEach, map, random, range } from "lodash";
 
 import "./Board.sass";
 import Place from "./Place";
@@ -35,7 +35,7 @@ const double = (
   />
 );
 
-const initialState = { "10": [blank], "01": [double] };
+const initialState = { "10": [jam], "01": [peanut], "11": [blank] };
 
 const Board = ({ width, height }: Props) => {
   const [selected, setSelected] = useState(null as ReactElement | null);
@@ -80,6 +80,35 @@ const Board = ({ width, height }: Props) => {
 
   const [boardState, setBoardState] = useState(initialState as BoardState);
 
+  const [boardSolved, setBoardSolved] = useState(false);
+
+  useEffect(() => {
+    let solved = true;
+    let sandwichCount = 0;
+    forEach(boardState, (sliceArray) => {
+      //   check that the top and bottom of the sandwich are clean
+      if (sliceArray.length) {
+        sandwichCount += 1;
+        if (
+          sliceArray[0].props.sauceBottom ||
+          sliceArray[sliceArray.length - 1].props.sauceTop
+        ) {
+          solved = false;
+        }
+        forEach(sliceArray, (slice, i) => {
+          //   check that every top is paired with an opposite sauce
+          if (i < sliceArray.length - 1) {
+            if (slice.props.sauceTop === sliceArray[i + 1].props.sauceBottom) {
+              solved = false;
+            }
+          }
+        });
+      }
+    });
+    if (sandwichCount > 1) solved = false;
+    setBoardSolved(solved);
+  }, [boardState]);
+
   const flipSlice = (slice: ReactElement<typeof Bread> | null) => {
     return (
       <Bread
@@ -97,6 +126,7 @@ const Board = ({ width, height }: Props) => {
 
   return (
     <>
+      {boardSolved && <div>SOLVED</div>}
       <div className="Board">
         <div
           className="selection"
