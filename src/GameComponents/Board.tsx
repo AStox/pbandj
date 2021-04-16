@@ -35,7 +35,7 @@ const double = (
   />
 );
 
-const initialState = { "10": [jam], "01": [peanut], "11": [blank] };
+const initialState = { "10": [jam], "01": [peanut], "11": [] };
 
 const Board = ({ width, height }: Props) => {
   const [selected, setSelected] = useState(null as ReactElement | null);
@@ -126,7 +126,9 @@ const Board = ({ width, height }: Props) => {
 
   return (
     <>
-      {boardSolved && <div>SOLVED</div>}
+      <div className="solved-container">
+        {boardSolved && <div className="solved">SOLVED</div>}
+      </div>
       <div className="Board">
         <div
           className="selection"
@@ -144,7 +146,6 @@ const Board = ({ width, height }: Props) => {
                   selected={selected}
                   setSelected={select}
                   updateBoard={updateBoard}
-                  slicesArray={boardState[`${j}${i}`]}
                   boardState={boardState}
                   setBoardState={setBoardState}
                 />

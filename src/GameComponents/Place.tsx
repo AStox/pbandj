@@ -9,7 +9,6 @@ import "./Place.sass";
 
 interface Props {
   id: string;
-  slicesArray: ReactElement[];
   selected?: ReactElement | null;
   setSelected(element: ReactElement | null): Promise<ReactElement>;
   updateBoard(id: string, changes: ReactElement[]): void;
@@ -19,13 +18,14 @@ interface Props {
 
 const Place = ({
   id,
-  slicesArray,
   selected,
   setSelected,
   updateBoard,
   boardState,
   setBoardState,
 }: Props) => {
+  const slicesArray = boardState[id];
+
   const select = (index: number, element: ReactElement) => {
     return setSelected(element).then(() => {
       const arr = boardState[id];
@@ -75,7 +75,11 @@ const Place = ({
     <div className="Place" onClick={addSlice}>
       <div className="bread-container">
         {map(slicesArray, (item, i) => (
-          <div className="slice-container" style={{ top: `-${i * 2}rem` }}>
+          <div
+            key={i}
+            className="slice-container"
+            style={{ top: `-${i * 2}rem` }}
+          >
             {React.cloneElement(item, {
               selected,
               setSelected: partial(select, i),

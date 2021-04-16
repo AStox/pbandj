@@ -3,6 +3,8 @@
 ▶️ Add win animation
 ▶️ Add undo/redo
 ▶️ Add undo/redo
-▶️ Add level editor
+▶️ Add level initial state
 ▶️ Add level select
+▶️ Add level editor
 ▶️ Add multi-slice selecting
+▶️ Investigate why sauce takes so long to propogate
