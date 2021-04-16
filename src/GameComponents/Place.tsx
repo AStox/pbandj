@@ -56,6 +56,7 @@ const Place = ({
               sauceTop={slicesArray[i + 1].props.sauceBottom}
             />
           );
+          setBoardState({ ...boardState, [id]: slicesArray });
         }
       }
       if (i > 0) {
@@ -66,6 +67,7 @@ const Place = ({
               sauceBottom={slicesArray[i - 1].props.sauceTop}
             />
           );
+          setBoardState({ ...boardState, [id]: slicesArray });
         }
       }
     });

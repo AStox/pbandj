@@ -1,43 +1,19 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { forEach, map, random, range } from "lodash";
+import { forEach, keys, map, random, range } from "lodash";
 
 import "./Board.sass";
 import Place from "./Place";
 import Bread from "./Bread";
-import { useMemo } from "react";
-import { useCallback } from "react";
 
 interface Props {
-  width: number;
-  height: number;
+  initialState: BoardState;
 }
 
 export interface BoardState {
   [id: string]: ReactElement[];
 }
-const blank = <Bread rotTop={random(20, 160)} rotBottom={random(20, 160)} />;
-const peanut = (
-  <Bread
-    sauceTop="peanut"
-    rotTop={random(20, 160)}
-    rotBottom={random(20, 160)}
-  />
-);
-const jam = (
-  <Bread sauceTop="jam" rotTop={random(20, 160)} rotBottom={random(20, 160)} />
-);
-const double = (
-  <Bread
-    sauceTop="peanut"
-    sauceBottom="jam"
-    rotTop={random(20, 160)}
-    rotBottom={random(20, 160)}
-  />
-);
 
-const initialState = { "10": [jam], "01": [peanut], "11": [] };
-
-const Board = ({ width, height }: Props) => {
+const Board = ({ initialState }: Props) => {
   const [selected, setSelected] = useState(null as ReactElement | null);
 
   const select = (element: ReactElement) => {
@@ -124,11 +100,18 @@ const Board = ({ width, height }: Props) => {
     return setBoardState({ ...boardState, [id]: changes });
   };
 
+  const highestId = keys(boardState).sort((a, b) => b - a)[0];
+  const width = parseInt(highestId[0]) + 1;
+  const height = parseInt(highestId[1]) + 1;
+  console.log(height);
+
   return (
     <>
-      <div className="solved-container">
-        {boardSolved && <div className="solved">SOLVED</div>}
-      </div>
+      {boardSolved && (
+        <div className="solved-container">
+          <div className="solved">SOLVED</div>
+        </div>
+      )}
       <div className="Board">
         <div
           className="selection"
