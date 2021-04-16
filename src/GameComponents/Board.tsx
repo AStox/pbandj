@@ -112,7 +112,7 @@ const Board = ({ initialState }: Props) => {
           <div className="solved">SOLVED</div>
         </div>
       )}
-      <div className="Board">
+      <div className="Board" style={{ cursor: selected ? "grabbing" : "grab" }}>
         <div
           className="selection"
           style={{ top: curPos[1] + 1, left: curPos[0] + 1 }}
@@ -137,6 +137,14 @@ const Board = ({ initialState }: Props) => {
           ))}
         </div>
       </div>
+      {!boardSolved && (
+        <div className="tutorial-container">
+          <div className="tutorial">
+            {selected && "Spacebar to flip"}
+            {!selected && "Click to grab"}
+          </div>
+        </div>
+      )}
     </>
   );
 };

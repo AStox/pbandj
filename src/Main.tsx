@@ -30,7 +30,12 @@ const Main = () => {
     />
   );
 
-  const initialState = { "00": [jam], "10": [peanut], "01": [], "11": [] };
+  const initialState = {
+    "00": [jam, double],
+    "10": [blank],
+    "01": [],
+    "11": [],
+  };
 
   return <Board initialState={initialState} />;
 };
