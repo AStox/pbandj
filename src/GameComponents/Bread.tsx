@@ -6,8 +6,8 @@ import "./Bread.sass";
 interface Props {
   sauceTop?: "peanut" | "jam" | undefined;
   sauceBottom?: "peanut" | "jam" | undefined;
-  selected?: ReactElement | null;
-  setSelected?(element: ReactElement | null): Promise<ReactElement>;
+  selected: ReactElement[];
+  setSelected?(): Promise<ReactElement[]>;
   addSlice?(): void;
   rotTop?: number;
   rotBottom?: number;
@@ -24,16 +24,12 @@ const Bread = (props: Props) => {
   } = props;
 
   const [rotSlice] = useState(random(-5, 5));
-  //   const [rotTop] = useState(random(20, 160));
-  //   const [peanutRotation] = useState(random(-5, 5));
 
   const handleClick = () => {
-    if (selected && addSlice) {
+    if (selected.length && addSlice) {
       addSlice();
-    } else {
-      if (setSelected) {
-        setSelected(<Bread {...props} />).catch(() => {});
-      }
+    } else if (setSelected) {
+      setSelected().catch(() => {});
     }
   };
 
@@ -68,7 +64,7 @@ const Bread = (props: Props) => {
         {sauceTop === "jam" && <div className="jam" />}
       </div>
       <div className="absolute-container" style={{ rotate: `${rotSlice}deg` }}>
-        <div className="shadow"></div>
+        <div className="shadow" />
       </div>
     </div>
   );

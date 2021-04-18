@@ -1,10 +1,10 @@
-▶️ Add sauces on plates
-✅ Add win condition
+▶️ Add multi-slice selecting
 ▶️ Add win animation
 ▶️ Add undo/redo
-▶️ Add undo/redo
-▶️ Add level initial state
 ▶️ Add level select
 ▶️ Add level editor
-▶️ Add multi-slice selecting
-▶️ Investigate why sauce takes so long to propogate
+▶️ Add sauces on plates?
+✅ Add level initial state
+✅ Add win condition
+✅ Add tutorial condition
+✅ Investigate why sauce takes so long to propogate

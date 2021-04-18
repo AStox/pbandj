@@ -30,11 +30,27 @@ const Main = () => {
     />
   );
 
+  const peanutTop = (
+    <Bread
+      sauceTop="peanut"
+      rotTop={random(20, 160)}
+      rotBottom={random(20, 160)}
+    />
+  );
+
+  const peanutBottom = (
+    <Bread
+      sauceBottom="peanut"
+      rotTop={random(20, 160)}
+      rotBottom={random(20, 160)}
+    />
+  );
+
   const initialState = {
-    "00": [jam, double],
-    "10": [blank],
-    "01": [],
-    "11": [],
+    "00": [peanut, blank],
+    "10": [jam, blank],
+    // "01": [],
+    // "11": [],
   };
 
   return <Board initialState={initialState} />;
