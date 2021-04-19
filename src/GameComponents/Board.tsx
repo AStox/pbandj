@@ -5,12 +5,14 @@ import React, {
   MouseEventHandler,
   KeyboardEventHandler,
 } from "react";
-import { forEach, keys, map, range } from "lodash";
+import { forEach, keys, map, random, range } from "lodash";
 
 import Place from "./Place";
 import Bread from "./Bread";
 
 import "./Board.sass";
+import WinAnimation from "./WinAnimation";
+import { pixelsToRem } from "../utils";
 
 interface Props {
   initialState: BoardState;
@@ -172,6 +174,13 @@ const Board = ({ initialState }: Props) => {
           </div>
         </div>
       )}
+      <WinAnimation
+        dir={random(0.5, 1.5)}
+        initialPos={[
+          random(0, pixelsToRem(window.screen.availWidth) - 17),
+          random(-10, 10),
+        ]}
+      />
     </>
   );
 };
