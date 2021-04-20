@@ -1,4 +1,4 @@
-import { initial, random } from "lodash";
+import { random } from "lodash";
 import React from "react";
 import Board from "./GameComponents/Board";
 import Bread from "./GameComponents/Bread";
@@ -46,11 +46,14 @@ const Main = () => {
     />
   );
 
+  // const initialState = {
+  //   "00": [peanut, blank],
+  //   "10": [jam, blank],
+  // };
+
   const initialState = {
-    "00": [peanut, blank],
-    "10": [jam, blank],
-    // "01": [],
-    // "11": [],
+    "00": [peanut],
+    "10": [jam],
   };
 
   return <Board initialState={initialState} />;

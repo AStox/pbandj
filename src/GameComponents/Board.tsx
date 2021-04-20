@@ -174,13 +174,12 @@ const Board = ({ initialState }: Props) => {
           </div>
         </div>
       )}
-      <WinAnimation
-        dir={random(0.5, 1.5)}
-        initialPos={[
-          random(0, pixelsToRem(window.screen.availWidth) - 17),
-          random(-10, 10),
-        ]}
-      />
+      {boardSolved && (
+        <>
+          <WinAnimation timeout={50} />
+          {<WinAnimation timeout={50} />}
+        </>
+      )}
     </>
   );
 };
