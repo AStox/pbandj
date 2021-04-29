@@ -1,9 +1,5 @@
-body
-    overflow: hidden
 .Board
-    padding: 5rem
-    height:80vh
-    width: 80vw
+    display: flex
 
     .flex-vert
         display: flex
@@ -11,6 +7,7 @@ body
         justify-content: center
         height: 100%
         width: 100%
+        margin: 2.5rem 5rem
 
     .flex-hor
         display: flex
@@ -18,6 +15,7 @@ body
         justify-content: center
         height: 100%
         width: 100%
+        margin: 2.5rem 0
 
     .selection
         position: absolute
@@ -56,6 +54,7 @@ body
         z-index: 10
         rotate: -2deg
         pointer-events: none
+        text-shadow: 0.5rem 1rem 0 #ddd
 
 .tutorial-container
     position: absolute

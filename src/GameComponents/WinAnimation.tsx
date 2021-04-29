@@ -77,7 +77,6 @@ const WinAnimation = ({ timeout }: Props) => {
       : dir[i];
   };
   const height = (slice: number, stream: number) => {
-    console.log(slice);
     const vel = accel * slice;
     const dist = (vel - initialVel[stream]) * slice;
     return dist;

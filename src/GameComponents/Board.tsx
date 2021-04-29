@@ -5,14 +5,14 @@ import React, {
   MouseEventHandler,
   KeyboardEventHandler,
 } from "react";
-import { forEach, keys, map, random, range } from "lodash";
+import { forEach, keys, map, range } from "lodash";
 
 import Place from "./Place";
 import Bread from "./Bread";
+import WinAnimation from "./WinAnimation";
+import Legend from "./Legend";
 
 import "./Board.sass";
-import WinAnimation from "./WinAnimation";
-import { pixelsToRem } from "../utils";
 
 interface Props {
   initialState: BoardState;
@@ -108,7 +108,7 @@ const Board = ({ initialState }: Props) => {
     return setBoardState({ ...boardState, [id]: changes });
   };
 
-  const highestId = keys(boardState).sort((a, b) => b - a)[0];
+  const highestId = keys(boardState).sort((a, b) => b - a)[0] || ["00"];
   const width = parseInt(highestId[0], 10) + 1;
   const height = parseInt(highestId[1], 10) + 1;
 
@@ -157,6 +157,7 @@ const Board = ({ initialState }: Props) => {
             </div>
           ))}
         </div>
+        {/* <Legend /> */}
       </div>
       {!boardSolved && (
         <div className="tutorial-container">
@@ -177,7 +178,7 @@ const Board = ({ initialState }: Props) => {
       {boardSolved && (
         <>
           <WinAnimation timeout={50} />
-          {<WinAnimation timeout={50} />}
+          <WinAnimation timeout={50} />
         </>
       )}
     </>
