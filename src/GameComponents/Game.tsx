@@ -1,7 +1,9 @@
+import { map, mapValues } from "lodash";
 import React, { useState } from "react";
 import Board from "./Board";
 import BoardStateGenerator from "./BoardStateGenerator";
-import levels from "./levels";
+import { JsonLevel, Level, levels as jsonLevels } from "./levels";
+import LevelSelector from "./LevelSelector";
 
 const gameModes = {
   main: "main",
@@ -11,12 +13,49 @@ const gameModes = {
 const Game = () => {
   const [currentMode, setCurrentMode] = useState(gameModes.main);
   const [currentLevel, setCurrentLevel] = useState(0);
-  //   const mainLevels = levels.main;
-  //   const custom = levels.custom;
+
+  const levels: { [mode: string]: Level[] } = mapValues(jsonLevels, (mode) =>
+    map(mode, (level) => BoardStateGenerator(level))
+  );
+
+  const [levelState, setLevelState] = useState(levels);
+
+  const levelSelect = (level: number) => {
+    setCurrentLevel(level);
+  };
+
+  const updateLevelState = (state: Level) => {
+    const newState = {
+      ...levelState,
+      [currentMode]: inlineSplice(
+        levelState[currentMode],
+        currentLevel,
+        1,
+        state
+      ),
+    };
+    setLevelState(newState);
+  };
+
+  const inlineSplice = (
+    array: any[],
+    index: number,
+    count: number,
+    replace: any
+  ) => {
+    array.splice(index, count, replace);
+    return array;
+  };
+
   return (
     <div>
+      <LevelSelector
+        levels={levelState[currentMode]}
+        levelSelect={levelSelect}
+      />
       <Board
-        initialState={BoardStateGenerator(levels[currentMode][currentLevel])}
+        boardState={levelState[currentMode][currentLevel]}
+        setBoardState={updateLevelState}
       />
     </div>
   );

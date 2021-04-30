@@ -1,4 +1,14 @@
-const levels = {
+import { ReactElement } from "react";
+
+export type JsonLevel = {
+  [id: string]: ("peanut" | "jam" | null)[][];
+};
+
+export type Level = {
+  [id: string]: ReactElement[];
+};
+
+export const levels: { [mode: string]: JsonLevel[] } = {
   main: [
     {
       "00": [["peanut", null]],
@@ -26,5 +36,3 @@ const levels = {
   ],
   custom: [],
 };
-
-export default levels;

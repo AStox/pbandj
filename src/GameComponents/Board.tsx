@@ -10,19 +10,20 @@ import { forEach, keys, map, range } from "lodash";
 import Place from "./Place";
 import Bread from "./Bread";
 import WinAnimation from "./WinAnimation";
-import Legend from "./Legend";
 
 import "./Board.sass";
+import { Level } from "./levels";
 
 interface Props {
-  initialState: BoardState;
+  boardState: BoardState;
+  setBoardState(state: Level): void;
 }
 
 export interface BoardState {
   [id: string]: ReactElement[];
 }
 
-const Board = ({ initialState }: Props) => {
+const Board = ({ boardState, setBoardState }: Props) => {
   const [selected, setSelected] = useState([] as ReactElement[]);
 
   const select = (elements: ReactElement[]) => {
@@ -48,7 +49,7 @@ const Board = ({ initialState }: Props) => {
     setCurPos([e.pageX, e.pageY]);
   };
 
-  const [boardState, setBoardState] = useState(initialState as BoardState);
+  //   const [boardState, setBoardState] = useState(initialState as BoardState);
 
   const [boardSolved, setBoardSolved] = useState(false);
 
@@ -121,13 +122,10 @@ const Board = ({ initialState }: Props) => {
       )}
       <div
         className="Board"
-        style={{ cursor: selected ? "grabbing" : "grab" }}
+        style={{ cursor: selected.length ? "grabbing" : "grab" }}
         onMouseMove={followCursor}
       >
-        <div
-          className="selection"
-          style={{ top: curPos[1] + 1, left: curPos[0] + 1 }}
-        >
+        <div className="selection" style={{ top: curPos[1], left: curPos[0] }}>
           <div className="bread-container">
             {selected.map((slice, i) => (
               <div
